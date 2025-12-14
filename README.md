@@ -1,54 +1,45 @@
+ NO LONGER MAINTAINED see : https://github.com/Sikarugir-App/Sikarugir. This GUI gives you more control and options than whiskey and is currently maintained. Watch video on their github to learn how to use it. Create a link from inside the generated .app to WineLauncher to a have a simple GUI letting you run games. Keep all games files in the .app and they will run properly. If theres interest I may make a fork of their app with a simple list that lets you launch games, or maybe they will implement that in the near future. 
+
 <div align="center">
   
   # Bourbon 🥃
   *Barrel-aged Whisky*
   
-  # ~~Whisky 🥃~~
-  *Wine but a bit stronger*
-  
-  ![](https://img.shields.io/github/actions/workflow/status/IsaacMarovitz/Whisky/SwiftLint.yml?style=for-the-badge)
-  [![](https://img.shields.io/discord/1115955071549702235?style=for-the-badge)](https://discord.gg/CsqAfs9CnM)
 </div>
 
-## Maintenance Notice
+<div align="center">
+  <img width="750" alt="New Bottle" src="https://github.com/leonewt0n/Bourbon/raw/main/bourbonScreenshot.png">
 
-[Whisky is no longer actively maintained](https://docs.getwhisky.app/maintenance-notice). Apps and games may break at any time.
-
-<img width="650" alt="Config" src="https://github.com/Whisky-App/Whisky/assets/42140194/d0a405e8-76ee-48f0-92b5-165d184a576b">
-
-Familiar UI that integrates seamlessly with macOS
-
-<div align="right">
-  <img width="650" alt="New Bottle" src="https://github.com/Whisky-App/Whisky/assets/42140194/ed1a0d69-d8fb-442b-9330-6816ba8981ba">
-
-  One-click bottle creation and management
 </div>
 
-<img width="650" alt="debug" src="https://user-images.githubusercontent.com/42140194/229176642-57b80801-d29b-4123-b1c2-f3b31408ffc6.png">
-
-Debug and profile with ease
 
 ---
 
-Whisky provides a clean and easy to use graphical wrapper for Wine built in native SwiftUI. You can make and manage bottles, install and run Windows apps and games, and unlock the full potential of your Mac with no technical knowledge required. Whisky is built on top of CrossOver 22.1.1, and Apple's own `Game Porting Toolkit`.
-
-Translated on [Crowdin](https://crowdin.com/project/whisky).
+Bourbon provides a clean and easy to use graphical wrapper for Wine built in native SwiftUI. You can make and manage bottles, install and run Windows apps and games, and unlock the full potential of your Mac with no technical knowledge required. Whisky is built on top of Gcenx's Wine 10, and Apple's own `Game Porting Toolkit`.
 
 ---
+## CLI VERSION:
+https://github.com/leonewt0n/gpt-wine-latest
 
 ## System Requirements
 - CPU: Apple Silicon (M-series chips)
 - OS: macOS Sonoma 14.0 or later
 
-## Homebrew
+## Build
+* Install .pkg to get swiftlint https://github.com/realm/SwiftLint/releases
+* Open Bourbon.xcodeproj in Xcode
+* Adjust signing
+* Click Play button
 
-Whisky is on homebrew! Install with 
-`brew install --cask whisky`.
-
-## My game isn't working!
-
-Some games need special steps to get working. Check out the [wiki](https://github.com/IsaacMarovitz/Whisky/wiki/Game-Support).
-
+---
+## Wine Compilation 
+* Download Gcenx Wine from https://github.com/Gcenx/macOS_Wine_builds/releases
+* Extract out wine folder and rename to Wine and place in $HOME/Library/Application Support/com.leonewton.Bourbon/Libraries/
+* Download https://github.com/3Shain/dxmt
+* Follow directions to install dxmt https://github.com/3Shain/dxmt/wiki/DXMT-Installation-Guide-for-Geeks
+* Download Apple's Game Porting Toolkit Redist with D3DMetal https://developer.apple.com/games/game-porting-toolkit/
+* place external folder in wine lib folder
+* Install [GStreamer](https://gstreamer.freedesktop.org/data/pkg/osx/1.26.5/gstreamer-1.0-1.26.5-universal.pkg)
 ---
 
 ## Credits & Acknowledgments
@@ -64,21 +55,10 @@ Whisky is possible thanks to the magic of several projects:
 - [SwiftTextTable](https://github.com/scottrhoyt/SwiftyTextTable) by scottrhoyt
 - [CrossOver 22.1.1](https://www.codeweavers.com/crossover) by CodeWeavers and WineHQ
 - D3DMetal by Apple
+- [Whiskey.app](https://github.com/Whisky-App/Whisky) 
 
 Special thanks to Gcenx, ohaiibuzzle, and Nat Brown for their support and contributions!
 
 ---
 
-<table>
-  <tr>
-    <td>
-        <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="./images/cw-dark.png">
-          <img src="./images/cw-light.png" width="500">
-        </picture>
-    </td>
-    <td>
-        Whisky doesn't exist without CrossOver. Support the work of CodeWeavers using our <a href="https://www.codeweavers.com/store?ad=1010">affiliate link</a>.
-    </td>
-  </tr>
-</table>
+
