@@ -1,0 +1,30 @@
+--- a/dlls/kernelbase/process.c
++++ b/dlls/kernelbase/process.c
+@@ -567,6 +567,27 @@
+         }
+     }
+ 
++    /* Bourbon hack: Steam's Chromium web helper draws in a separate GPU process, into a window
++     * owned by the browser process, which the macOS driver can't display (the client window stays
++     * solid black). Older Steam clients passed --in-process-gpu under Wine; current ones don't,
++     * so add it to the browser process (the one without --type=). */
++    if (wcsstr( tidy_cmdline, L"steamwebhelper.exe" ) && !wcsstr( tidy_cmdline, L"--type=" ) &&
++        !wcsstr( tidy_cmdline, L"--in-process-gpu" ))
++    {
++        static const WCHAR extraW[] = L" --in-process-gpu";
++        SIZE_T len = lstrlenW( tidy_cmdline ) + ARRAY_SIZE(extraW);
++        WCHAR *new_cmdline = RtlAllocateHeap( GetProcessHeap(), 0, len * sizeof(WCHAR) );
++
++        if (new_cmdline)
++        {
++            lstrcpyW( new_cmdline, tidy_cmdline );
++            lstrcatW( new_cmdline, extraW );
++            if (tidy_cmdline != cmd_line) HeapFree( GetProcessHeap(), 0, tidy_cmdline );
++            tidy_cmdline = new_cmdline;
++            FIXME( "HACK: added --in-process-gpu to steamwebhelper.exe\n" );
++        }
++    }
++
+     /* Warn if unsupported features are used */
+ 
+     if (flags & (IDLE_PRIORITY_CLASS | HIGH_PRIORITY_CLASS | REALTIME_PRIORITY_CLASS |

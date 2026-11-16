@@ -31,13 +31,6 @@ public class WhiskyWineInstaller {
     /// URL to the installed `wine` `bin` directory
     public static let binFolder: URL = libraryFolder.appending(path: "Wine").appending(path: "bin")
 
-    /// Where Bourbon publishes its Wine runtime (`Libraries.tar.gz` + `WhiskyWineVersion.plist`):
-    /// the assets of the latest GitHub release. Upstream's data.getwhisky.app no longer serves them.
-    private static let runtimeReleaseURL = "https://github.com/imichaelnorris/bourbon/releases/latest/download"
-
-    /// URL of the Wine runtime archive
-    public static let librariesArchiveURL = URL(string: "\(runtimeReleaseURL)/Libraries.tar.gz")
-
     public static func isWhiskyWineInstalled() -> Bool {
         return whiskyWineVersion() != nil
     }
@@ -67,42 +60,9 @@ public class WhiskyWineInstaller {
         }
     }
 
+    /// Bourbon builds its runtime from source on this Mac (`Runtime/build.sh`) and publishes none,
+    /// so there is no remote version to update to. (Upstream's data.getwhisky.app is gone, too.)
     public static func shouldUpdateWhiskyWine() async -> (Bool, SemanticVersion) {
-        let versionPlistURL = "\(runtimeReleaseURL)/WhiskyWineVersion.plist"
-        let localVersion = whiskyWineVersion()
-
-        var remoteVersion: SemanticVersion?
-
-        if let remoteUrl = URL(string: versionPlistURL) {
-            remoteVersion = await withCheckedContinuation { continuation in
-                URLSession(configuration: .ephemeral).dataTask(with: URLRequest(url: remoteUrl)) { data, _, error in
-                    do {
-                        if error == nil, let data = data {
-                            let decoder = PropertyListDecoder()
-                            let remoteInfo = try decoder.decode(WhiskyWineVersion.self, from: data)
-                            let remoteVersion = remoteInfo.version
-
-                            continuation.resume(returning: remoteVersion)
-                            return
-                        }
-                        if let error = error {
-                            print(error)
-                        }
-                    } catch {
-                        print(error)
-                    }
-
-                    continuation.resume(returning: nil)
-                }.resume()
-            }
-        }
-
-        if let localVersion = localVersion, let remoteVersion = remoteVersion {
-            if localVersion < remoteVersion {
-                return (true, remoteVersion)
-            }
-        }
-
         return (false, SemanticVersion(0, 0, 0))
     }
 

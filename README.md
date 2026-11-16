@@ -10,6 +10,21 @@
   [![](https://img.shields.io/discord/1115955071549702235?style=for-the-badge)](https://discord.gg/CsqAfs9CnM)
 </div>
 
+## Setup
+
+Apple Silicon Mac with Xcode, Homebrew and Rosetta. Tell your coding agent *"set up Bourbon from github.com/imichaelnorris/bourbon, following its README Setup section"*, or run:
+
+```sh
+git clone https://github.com/imichaelnorris/bourbon && cd bourbon
+Runtime/build.sh   # builds Wine from CodeWeavers' CrossOver source (~5 min) and installs it
+xcodebuild -project Whisky.xcodeproj -scheme Whisky -configuration Release \
+  -derivedDataPath ~/Library/Developer/Xcode/DerivedData/Bourbon \
+  CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual DEVELOPMENT_TEAM= build
+ditto ~/Library/Developer/Xcode/DerivedData/Bourbon/Build/Products/Release/Whisky.app /Applications/Bourbon.app
+```
+
+Then open Bourbon, create a bottle, turn on **DXVK** in its config, and run [SteamSetup.exe](https://cdn.cloudflare.steamstatic.com/client/installer/SteamSetup.exe) in it. No binaries are published; see [Runtime/](Runtime/) for what gets built.
+
 ## Maintenance Notice
 
 [Whisky is no longer actively maintained](https://docs.getwhisky.app/maintenance-notice). Apps and games may break at any time.
