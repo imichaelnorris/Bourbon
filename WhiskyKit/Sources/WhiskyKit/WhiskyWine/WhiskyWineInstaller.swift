@@ -31,6 +31,13 @@ public class WhiskyWineInstaller {
     /// URL to the installed `wine` `bin` directory
     public static let binFolder: URL = libraryFolder.appending(path: "Wine").appending(path: "bin")
 
+    /// Where Bourbon publishes its Wine runtime (`Libraries.tar.gz` + `WhiskyWineVersion.plist`):
+    /// the assets of the latest GitHub release. Upstream's data.getwhisky.app no longer serves them.
+    private static let runtimeReleaseURL = "https://github.com/imichaelnorris/bourbon/releases/latest/download"
+
+    /// URL of the Wine runtime archive
+    public static let librariesArchiveURL = URL(string: "\(runtimeReleaseURL)/Libraries.tar.gz")
+
     public static func isWhiskyWineInstalled() -> Bool {
         return whiskyWineVersion() != nil
     }
@@ -61,7 +68,7 @@ public class WhiskyWineInstaller {
     }
 
     public static func shouldUpdateWhiskyWine() async -> (Bool, SemanticVersion) {
-        let versionPlistURL = "https://data.getwhisky.app/Wine/WhiskyWineVersion.plist"
+        let versionPlistURL = "\(runtimeReleaseURL)/WhiskyWineVersion.plist"
         let localVersion = whiskyWineVersion()
 
         var remoteVersion: SemanticVersion?
